@@ -11,7 +11,7 @@ export default function Hero() {
         transition={{ duration: 0.8 }}
         className="text-center"
       >
-        <h1 className="text-6xl font-bold">Aditya Xax</h1>
+        <h1 className="text-6xl font-bold">ADITYA</h1>
         <p className="mt-6 text-gray-400 text-xl">
           ML Engineer • Backend Developer • Builder
         </p>

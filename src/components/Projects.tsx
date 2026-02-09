@@ -39,7 +39,7 @@ export default function Projects() {
       >
         <h2 className="text-4xl font-bold mb-12 text-center">Projects</h2>
 
-        <div className="grid gap-8 justify-center [grid-template-columns:repeat(auto-fit,minmax(300px,350px))]">
+        <div className="flex flex-wrap justify-center gap-8">,
           {projects.map((project, index) => (
             <div
               key={index}

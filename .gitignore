@@ -12,6 +12,9 @@
 
 desktop.ini
 
+#public files
+public/me.jpg
+
 
 # testing
 /coverage
