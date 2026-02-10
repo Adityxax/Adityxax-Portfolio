@@ -31,7 +31,7 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section className="min-h-screen bg-black text-white px-8 py-20">
+    <section className="min-h-screen text-white px-8 py-20">
       <motion.div
         initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -39,15 +39,15 @@ export default function Projects() {
       >
         <h2 className="text-4xl font-bold mb-12 text-center">Projects</h2>
 
-        <div className="flex flex-wrap justify-center gap-8">,
+        <div className="flex flex-wrap justify-center gap-8">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="bg-gray-900 p-6 rounded-xl hover:scale-105 transition w-full max-w-sm"
+              className="bg-black/60 backdrop-blur-md p-6 rounded-xl hover:scale-105 transition w-full max-w-sm border border-white/10"
             >
               <h3 className="text-xl font-semibold">{project.title}</h3>
 
-              <p className="text-gray-400 mt-2">
+              <p className="text-gray-300 mt-2">
                 {project.description}
               </p>
 

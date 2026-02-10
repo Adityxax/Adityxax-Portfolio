@@ -28,41 +28,41 @@ export default function Contact() {
   };
 
   return (
-    <section className="min-h-screen bg-black text-white px-8 py-20">
+    <section className="min-h-screen text-white px-8 py-20">
       <motion.div
         initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="max-w-3xl mx-auto"
       >
-        <h2 className="text-4xl font-bold mb-8 text-center">Contact Me</h2>
+        <h2 className="text-4xl font-bold mb-12 text-center">Contact Me</h2>
 
         <form
           ref={form}
           onSubmit={sendEmail}
-          className="flex flex-col gap-6"
+          className="flex flex-col gap-6 bg-black/50 backdrop-blur-md p-8 rounded-2xl border border-white/10"
         >
           <input
             type="text"
             name="user_name"
-            placeholder="Your Name📛"
+            placeholder="Your Name"
             required
-            className="p-4 rounded bg-gray-900"
+            className="p-4 rounded bg-white/5 border border-white/10 focus:outline-none focus:border-blue-400"
           />
 
           <input
             type="email"
             name="user_email"
-            placeholder="Your Email📧"
+            placeholder="Your Email"
             required
-            className="p-4 rounded bg-gray-900"
+            className="p-4 rounded bg-white/5 border border-white/10 focus:outline-none focus:border-blue-400"
           />
 
           <textarea
             name="message"
-            placeholder="Your Message💬"
+            placeholder="Your Message"
             required
-            className="p-4 rounded bg-gray-900 h-40"
+            className="p-4 rounded bg-white/5 border border-white/10 h-40 focus:outline-none focus:border-blue-400"
           />
 
           <button
