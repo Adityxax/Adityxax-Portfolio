@@ -1,39 +1,102 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  SiPython, SiCplusplus, SiKotlin, SiTypescript, SiJavascript,
+  SiReact, SiNextdotjs, SiHtml5, SiCss3, SiTailwindcss,
+  SiNodedotjs, SiExpress, SiMongodb, SiMysql,
+  SiTensorflow, SiOpencv, SiPytorch, SiScikitlearn,
+  SiGit, SiDocker, SiVsco, SiAndroid, SiArduino,
+} from "react-icons/si";
 
 export default function About() {
   return (
-    <section className="min-h-screen text-white flex items-center justify-center px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        className="max-w-5xl grid md:grid-cols-2 gap-12 items-center"
-      >
-        {/* Image */}
-        <div className="flex justify-center items-center">
-          <div className="w-72 md:w-80 aspect-square overflow-hidden rounded-full shadow-2xl">
-            <img
-              src="/me.png"
-              alt="Aditya"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
+    <section className="py-16 px-6 max-w-5xl mx-auto">
+      <h2 className="text-3xl font-bold text-center mb-10">🛠 Tech Arsenal</h2>
 
-        {/* Text */}
-        <div>
-          <h2 className="text-4xl md:text-5xl font-bold">About Me</h2>
+      <div className="flex flex-col gap-8">
+        <SkillCategory title="Languages">
+          <Skill icon={<SiPython />} color="bg-yellow-500" name="Python" />
+          <Skill icon={<SiJavascript />} color="bg-yellow-400" name="JavaScript" />
+          <Skill icon={<SiTypescript />} color="bg-blue-500" name="TypeScript" />
+          <Skill icon={<SiKotlin />} color="bg-purple-500" name="Kotlin" />
+          <Skill icon={<SiCplusplus />} color="bg-blue-700" name="C++" />
+        </SkillCategory>
 
-          <p className="mt-6 text-gray-300 leading-relaxed text-lg">
-            I'm a developer focused on building ML-powered applications,
-            backend systems, and real-world tools. I enjoy turning ideas into
-            working products and designing systems that are both scalable and
-            practical.
-          </p>
-        </div>
-      </motion.div>
+        <SkillCategory title="Frontend">
+          <Skill icon={<SiReact />} color="bg-cyan-500" name="React" />
+          <Skill icon={<SiNextdotjs />} color="bg-black" name="Next.js" />
+          <Skill icon={<SiHtml5 />} color="bg-orange-600" name="HTML5" />
+          <Skill icon={<SiCss3 />} color="bg-blue-600" name="CSS3" />
+          <Skill icon={<SiTailwindcss />} color="bg-teal-500" name="Tailwind" />
+        </SkillCategory>
+
+        <SkillCategory title="Backend">
+          <Skill icon={<SiNodedotjs />} color="bg-green-600" name="Node.js" />
+          <Skill icon={<SiExpress />} color="bg-gray-700" name="Express" />
+          <Skill icon={<SiMongodb />} color="bg-green-700" name="MongoDB" />
+          <Skill icon={<SiMysql />} color="bg-blue-700" name="MySQL" />
+        </SkillCategory>
+
+        <SkillCategory title="AI / ML">
+          <Skill icon={<SiTensorflow />} color="bg-orange-500" name="TensorFlow" />
+          <Skill icon={<SiOpencv />} color="bg-red-500" name="OpenCV" />
+          <Skill icon={<SiPytorch />} color="bg-red-600" name="PyTorch" />
+          <Skill icon={<SiScikitlearn />} color="bg-yellow-500" name="Scikit-Learn" />
+        </SkillCategory>
+
+        <SkillCategory title="Tools & Platforms">
+          <Skill icon={<SiGit />} color="bg-orange-600" name="Git" />
+          <Skill icon={<SiDocker />} color="bg-blue-500" name="Docker" />
+          <Skill icon={<SiVsco />} color="bg-blue-600" name="VS Code" />
+          <Skill icon={<SiAndroid />} color="bg-green-600" name="Android" />
+          <Skill icon={<SiArduino />} color="bg-teal-600" name="Arduino" />
+        </SkillCategory>
+      </div>
     </section>
+  );
+}
+
+/* CATEGORY WRAPPER */
+function SkillCategory({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300">
+        {title}
+      </h3>
+      <div className="flex flex-wrap gap-3">{children}</div>
+    </div>
+  );
+}
+
+/* INDIVIDUAL SKILL BADGE */
+function Skill({
+  icon,
+  name,
+  color,
+}: {
+  icon: React.ReactNode;
+  name: string;
+  color: string;
+}) {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-white text-sm font-medium cursor-default ${color}`}
+    >
+      <span className="text-lg">{icon}</span>
+      <span>{name}</span>
+      {/* glow effect */}
+      <span
+        className={`absolute inset-0 rounded-full opacity-0 hover:opacity-30 blur-md transition-opacity duration-300 ${color}`}
+      />
+    </motion.div>
   );
 }
