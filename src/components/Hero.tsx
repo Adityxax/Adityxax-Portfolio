@@ -6,20 +6,6 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen text-white overflow-hidden flex items-center justify-center">
 
-      {/* HERO VIDEO */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover -z-20"
-      >
-        <source src="/bg.mp4" type="video/mp4" />
-      </video>
-
-      {/* DARK OVERLAY */}
-      <div className="absolute inset-0 bg-black/60 -z-10" />
-
       {/* LEFT SIDE BIG PFP */}
       <motion.div
         initial={{ opacity: 0, x: -80 }}
@@ -69,7 +55,6 @@ export default function Hero() {
       </motion.div>
 
       {/* FADE BOTTOM */}
-      <div className="absolute bottom-0 w-full h-40 bg-gradient-to-b from-transparent to-black" />
     </section>
   );
 }

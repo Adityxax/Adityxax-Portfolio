@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import {
-  SiPython, SiCplusplus, SiKotlin, SiTypescript, SiJavascript,
+  SiPython, SiCplusplus, SiKotlin, SiTypescript,
   SiReact, SiNextdotjs, SiHtml5, SiCss3, SiTailwindcss,
   SiNodedotjs, SiExpress, SiMongodb, SiMysql,
   SiTensorflow, SiOpencv, SiPytorch, SiScikitlearn,
@@ -17,7 +17,6 @@ export default function About() {
       <div className="flex flex-col gap-8">
         <SkillCategory title="Languages">
           <Skill icon={<SiPython />} color="bg-yellow-500" name="Python" />
-          <Skill icon={<SiJavascript />} color="bg-yellow-400" name="JavaScript" />
           <Skill icon={<SiTypescript />} color="bg-blue-500" name="TypeScript" />
           <Skill icon={<SiKotlin />} color="bg-purple-500" name="Kotlin" />
           <Skill icon={<SiCplusplus />} color="bg-blue-700" name="C++" />

@@ -45,7 +45,7 @@ export default function Contact() {
           <input
             type="text"
             name="user_name"
-            placeholder="Your Name"
+            placeholder="Your Name📛"
             required
             className="p-4 rounded bg-white/5 border border-white/10 focus:outline-none focus:border-blue-400"
           />
@@ -53,14 +53,14 @@ export default function Contact() {
           <input
             type="email"
             name="user_email"
-            placeholder="Your Email"
+            placeholder="Your Email📧"
             required
             className="p-4 rounded bg-white/5 border border-white/10 focus:outline-none focus:border-blue-400"
           />
 
           <textarea
             name="message"
-            placeholder="Your Message"
+            placeholder="Your Message💬"
             required
             className="p-4 rounded bg-white/5 border border-white/10 h-40 focus:outline-none focus:border-blue-400"
           />

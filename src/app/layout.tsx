@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ParallaxBackground from "@/components/ParallaxBackground";
+import ParticlesBackground from "@/components/ParticlesBackground";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -25,16 +25,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} text-white overflow-x-hidden`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} 
+        bg-gradient-to-b from-[#2b0005] via-[#140003] to-black 
+        text-white overflow-x-hidden`}>
+          
+        {/* GLOBAL PARTICLES BACKGROUND */}
+        <ParticlesBackground />
 
-        {/* GLOBAL PARALLAX BACKGROUND */}
-        <ParallaxBackground />
-
-        {/* PAGE CONTENT */}
+        {/* SITE CONTENT */}
         <main className="relative z-10">
           {children}
         </main>
-
       </body>
     </html>
   );
