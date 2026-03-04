@@ -26,7 +26,7 @@ export default function ParticlesBackground() {
           fpsLimit: 60,
           particles: {
             number: {
-              value: 150,
+              value: 145,
               density: {
                 enable: true,
               },
