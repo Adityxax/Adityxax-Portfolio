@@ -4,11 +4,10 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   SiPython, SiCplusplus, SiTypescript,
-  SiReact, SiNextdotjs, SiHtml5, SiCss3, SiTailwindcss,
-  SiNodedotjs, SiMongodb, SiMysql,
-  SiTensorflow, SiOpencv, SiPytorch, SiScikitlearn,
-  SiGit, SiDocker, SiVsco, SiAndroid, SiArduino, SiFastapi,
-  SiPandas, SiGooglecolab, SiPycharm
+  SiReact, SiNextdotjs, SiHtml5, SiCss, SiTailwindcss,
+  SiNodedotjs, SiMongodb, SiMysql, SiOpencv, SiPytorch, 
+  SiScikitlearn, SiGit, SiDocker, SiVsco, SiAndroid, 
+  SiFastapi, SiPandas, SiGooglecolab, SiPycharm
 } from "react-icons/si";
 
 
@@ -28,8 +27,8 @@ export default function About() {
           <Skill icon={<SiReact />} color="bg-cyan-500" name="React" />
           <Skill icon={<SiTailwindcss />} color="bg-teal-500" name="Tailwind" />
           <Skill icon={<SiNextdotjs />} color="bg-black" name="Next.js" />
-          <Skill icon={<SiHtml5 />} color="bg-orange-600" name="HTML5" />
-          <Skill icon={<SiCss3 />} color="bg-blue-600" name="CSS3" />         
+          <Skill icon={<SiHtml5 />} color="bg-orange-600" name="HTML" />
+          <Skill icon={<SiCss />} color="bg-blue-600" name="CSS" />         
         </SkillCategory>
 
         <SkillCategory title="Backend">
@@ -40,7 +39,6 @@ export default function About() {
         </SkillCategory>
 
         <SkillCategory title="AI / ML">
-          <Skill icon={<SiTensorflow />} color="bg-orange-500" name="TensorFlow" />
           <Skill icon={<SiOpencv />} color="bg-red-500" name="OpenCV" />
           <Skill icon={<Image src="/icons/ultralytics.svg" width={24} height={24} alt="Ultralytics" />} color="bg-purple-500" name="Ultralytics" />
           <Skill icon={<Image src="/icons/cmake.svg" width={24} height={24} alt="CMake" />} color="bg-blue-500" name="CMake" />
@@ -56,7 +54,6 @@ export default function About() {
           <Skill icon={<SiGooglecolab />} color="bg-green-600" name="Colab" />
           <Skill icon={<SiPycharm />} color="bg-green-700" name="PyCharm" />
           <Skill icon={<SiAndroid />} color="bg-green-600" name="Android" />
-          <Skill icon={<SiArduino />} color="bg-teal-600" name="Arduino" />
         </SkillCategory>
       </div>
     </section>

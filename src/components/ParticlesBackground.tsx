@@ -23,7 +23,7 @@ export default function ParticlesBackground() {
           background: {
             color: "transparent",
           },
-          fpsLimit: 60,
+          fpsLimit: 120,
           particles: {
             number: {
               value: 145,
@@ -51,7 +51,7 @@ export default function ParticlesBackground() {
             },
             move: {
               enable: true,
-              speed: 2,
+              speed: 2.5,
               outModes: {
                 default: "bounce",
               },
@@ -70,7 +70,7 @@ export default function ParticlesBackground() {
                 mode: "grab",
               },
               onClick: {
-                enable: true,
+                enable: false,
                 mode: "push",
               },
             },
