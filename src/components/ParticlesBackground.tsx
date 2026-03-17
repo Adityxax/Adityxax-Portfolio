@@ -26,11 +26,11 @@ export default function ParticlesBackground() {
           options={{
             fullScreen: true,
             background: { color: "transparent" },
-            fpsLimit: 60,
+            fpsLimit: 30,
             particles: {
               number: { value: 35, density: { enable: false } },
-              shadow: { enable: true, color: "#00f0ff", blur: 10 },
-              color: { value: ["#f84444", "#7ceef7", "#9772ee", "#6af39c", "#facc15"] },
+              shadow: { enable: false, color: "#00f0ff", blur: 10 },
+              color: { value: ["#ec2b2b", "#61ecf6", "#652bec", "#1ba94f", "#fecc04"] },
               shape: { type: "circle" },
               links: { enable: true, color: "#f94050", distance: 150, opacity: 0.3, width: 1 },
               move: { enable: true, speed: 2.5, outModes: { default: "bounce" } },
@@ -52,7 +52,7 @@ export default function ParticlesBackground() {
             particles: {
               number: { value: 145, density: { enable: true } },
               shadow: { enable: true, color: "#00f0ff", blur: 10 },
-              color: { value: ["#f84444", "#7ceef7", "#9772ee", "#6af39c", "#facc15"] },
+              color: { value: ["#ff0000", "#56e4ee", "#6a33ea", "#2cee73", "#ffcc00"] },
               shape: { type: "circle" },
               links: { enable: true, color: "#f94050", distance: 150, opacity: 0.3, width: 1 },
               move: { enable: true, speed: 2.5, outModes: { default: "bounce" } },
