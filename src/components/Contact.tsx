@@ -11,7 +11,7 @@ const socials = [
   { name: "LinkedIn", icon: <FaLinkedin />, url: "https://www.linkedin.com/in/adityxax/", color: "hover:text-blue-400 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)]" },
   { name: "Facebook", icon: <FaFacebook />, url: "https://www.facebook.com/adityxax", color: "hover:text-blue-600 hover:border-blue-600 hover:shadow-[0_0_20px_rgba(37,99,235,0.3)]" },
   { name: "Mail", icon: <FaEnvelope />, url: "mailto:officialadi2003@gmail.com", color: "hover:text-red-500 hover:border-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]" },
-  { name: "Outlook", icon: <PiMicrosoftOutlookLogoFill />, url: "mailto:adityxax2003@outlook.com", color: "hover:text-cyan-500 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]" },
+  { name: "Outlook", icon: <PiMicrosoftOutlookLogoFill />, url: "mailto:adityxax2003@outlook.com", color: "hover:text-[#0078d4] hover:border-[#0078d4] hover:shadow-[0_0_20px_rgba(0,120,212,0.3)]" },
 ];
 
 export default function Contact() {
@@ -62,11 +62,11 @@ export default function Contact() {
         {/* Left Column: Info & Socials */}
         <div className="space-y-8 flex flex-col justify-center">
           <div className="space-y-4">
-            <h3 className="text-3xl md:text-5xl font-bold tracking-tighter bg-gradient-to-br from-white to-gray-500 bg-clip-text text-transparent text-center lg:text-left">
-              Let's create something <br /> amazing together.
+            <h3 className="text-3xl md:text-5xl font-bold tracking-tighter bg-gradient-to-br from-white to-gray-500 bg-clip-text text-transparent text-center lg:text-left leading-tight">
+              Let's build something <br className="hidden md:block" /> amazing together.
             </h3>
             <p className="text-gray-400 text-lg max-w-md mx-auto lg:mx-0 text-center lg:text-left">
-              Have a project in mind? Reach out and I'll get back to you as soon as possible.
+              Whether you want to discuss a project, need a technical collaborator, or just want to say hi—I'm always open to connecting!
             </p>
           </div>
 
@@ -127,7 +127,7 @@ export default function Contact() {
                 required
                 rows={4}
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-red-500/50 focus:bg-white/10 transition-all text-white resize-none"
-                placeholder="Tell me about your project..."
+                placeholder="How can I help you? Project, collaboration, or just a hello..."
               />
             </div>
 
