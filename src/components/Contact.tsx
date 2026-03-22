@@ -1,16 +1,24 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 
 export default function Contact() {
   const form = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMsg, setStatusMsg] = useState<{ text: string; type: "success" | "error" | null }>({
+    text: "",
+    type: null,
+  });
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!form.current) return;
+
+    setIsSubmitting(true);
+    setStatusMsg({ text: "", type: null });
 
     emailjs
       .sendForm(
@@ -20,10 +28,14 @@ export default function Contact() {
         "WPHX0R6kpz2UvaKIs"
       )
       .then(() => {
-        alert("Message sent successfully");
+        setStatusMsg({ text: "Message sent successfully! 🚀", type: "success" });
+        form.current?.reset();
       })
       .catch(() => {
-        alert("Failed to send message");
+        setStatusMsg({ text: "Failed to send message. Please try again.", type: "error" });
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
   };
 
@@ -65,11 +77,28 @@ export default function Contact() {
             className="p-4 rounded bg-white/5 border border-white/10 h-40 focus:outline-none focus:border-blue-400"
           />
 
+          {statusMsg.text && (
+            <div
+              className={`p-3 rounded text-center font-medium ${
+                statusMsg.type === "success"
+                  ? "bg-green-500/20 text-green-300 border border-green-500/50"
+                  : "bg-red-500/20 text-red-300 border border-red-500/50"
+              }`}
+            >
+              {statusMsg.text}
+            </div>
+          )}
+
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 transition p-4 rounded font-semibold"
+            disabled={isSubmitting}
+            className={`transition p-4 rounded font-semibold text-white ${
+              isSubmitting
+                ? "bg-blue-500/50 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600"
+            }`}
           >
-            Send Message
+            {isSubmitting ? "Sending..." : "Send Message"}
           </button>
         </form>
       </motion.div>

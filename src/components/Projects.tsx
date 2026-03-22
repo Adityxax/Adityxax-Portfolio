@@ -49,12 +49,20 @@ export default function Projects() {
 
   const project = projects[index];
 
+  const handleDragEnd = (event: any, info: any) => {
+    if (info.offset.x < -50) {
+      next(); // Swiped left
+    } else if (info.offset.x > 50) {
+      prev(); // Swiped right
+    }
+  };
+
   return (
-    <section className="min-h-screen text-white px-8 py-24 flex flex-col items-center">
+    <section className="min-h-screen text-white px-6 sm:px-8 py-24 flex flex-col items-center">
 
       <h2 className="text-4xl font-bold mb-14">Projects</h2>
 
-      <div className="relative w-full max-w-5xl">
+      <div className="relative w-full max-w-5xl group">
 
         {/* Project Card */}
         <motion.div
@@ -62,7 +70,10 @@ export default function Projects() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="rounded-3xl border border-white/10 bg-black/60 backdrop-blur-x2 shadow-[0_0_50px_rgba(0,0,0,0.6)] overflow-hidden"
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          onDragEnd={handleDragEnd}
+          className="rounded-3xl border border-white/10 bg-black/60 backdrop-blur-x2 shadow-[0_0_50px_rgba(0,0,0,0.6)] overflow-hidden cursor-grab active:cursor-grabbing"
         >
 
           {/* Browser Header */}
@@ -118,24 +129,24 @@ export default function Projects() {
         {/* Left Arrow */}
         <button
            onClick={prev}
-           className="absolute -left-16 top-1/2 -translate-y-1/2 
+           className="absolute left-4 md:-left-16 top-1/2 -translate-y-1/2 z-10
            w-12 h-12 flex items-center justify-center
-           rounded-full bg-black/60 backdrop-blur-md
-           border border-white/10
-           hover:bg-white/10 hover:scale-110
-           transition-all duration-300 shadow-lg">
+           rounded-full bg-black/80 md:bg-black/60 backdrop-blur-md
+           border border-white/20 md:border-white/10
+           hover:bg-white/20 md:hover:bg-white/10 hover:scale-110
+           transition-all duration-300 shadow-lg text-white">
           <FiChevronLeft size={26} />
         </button>
 
-
+        {/* Right Arrow */}
         <button
           onClick={next}
-          className="absolute -right-16 top-1/2 -translate-y-1/2 
+          className="absolute right-4 md:-right-16 top-1/2 -translate-y-1/2 z-10
           w-12 h-12 flex items-center justify-center
-          rounded-full bg-black/60 backdrop-blur-md
-          border border-white/10
-          hover:bg-white/10 hover:scale-110
-          transition-all duration-300 shadow-lg">
+          rounded-full bg-black/80 md:bg-black/60 backdrop-blur-md
+          border border-white/20 md:border-white/10
+          hover:bg-white/20 md:hover:bg-white/10 hover:scale-110
+          transition-all duration-300 shadow-lg text-white">
           <FiChevronRight size={26} />
         </button>
 
