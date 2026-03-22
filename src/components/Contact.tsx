@@ -24,7 +24,6 @@ export default function Contact() {
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!form.current) return;
 
     setIsSubmitting(true);
@@ -50,99 +49,111 @@ export default function Contact() {
   };
 
   return (
-    <section className="min-h-screen text-white px-6 md:px-12 py-24 flex items-center justify-center">
+    <section id="contact" className="min-h-screen text-white px-6 md:px-12 py-24 flex flex-col items-center justify-center">
+      <h2 className="text-4xl font-bold mb-14 text-center">Get In Touch</h2>
+
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24"
+        viewport={{ once: true }}
+        className="grid lg:grid-cols-2 gap-12 w-full max-w-7xl"
       >
-        
-        {/* Left Side: Text and Socials */}
-        <div className="flex flex-col justify-center">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">Let's Connect.</h2>
-          <p className="text-gray-300 text-lg mb-10 leading-relaxed max-w-md">
-            Whether you have a question, a project idea, or just want to say hi, my inbox is always open. 
-            I'll try my best to get back to you!
-          </p>
+        {/* Left Column: Info & Socials */}
+        <div className="space-y-8 flex flex-col justify-center">
+          <div className="space-y-4">
+            <h3 className="text-3xl md:text-5xl font-bold tracking-tighter bg-gradient-to-br from-white to-gray-500 bg-clip-text text-transparent text-center lg:text-left">
+              Let's create something <br /> amazing together.
+            </h3>
+            <p className="text-gray-400 text-lg max-w-md mx-auto lg:mx-0 text-center lg:text-left">
+              Have a project in mind? Reach out and I'll get back to you as soon as possible.
+            </p>
+          </div>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-5 justify-center lg:justify-start">
             {socials.map((social) => (
-              <a
+              <motion.a
                 key={social.name}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                whileHover={{ y: -8, scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 title={social.name}
-                className={`w-14 h-14 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-2xl text-gray-300 transition-all duration-300 ${social.color} hover:-translate-y-1 hover:bg-white/10`}
+                className={`w-16 h-16 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-3xl transition-all duration-300 ${social.color} shadow-lg backdrop-blur-md`}
               >
                 {social.icon}
-              </a>
+              </motion.a>
             ))}
           </div>
         </div>
 
-        {/* Right Side: Contact Form */}
-        <div className="flex flex-col justify-center">
+        {/* Right Column: Form */}
+        <div className="relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-red-500/20 to-blue-500/20 rounded-[2rem] blur-xl opacity-0 group-hover:opacity-100 transition duration-1000"></div>
+          
           <form
             ref={form}
             onSubmit={sendEmail}
-            className="flex flex-col gap-6 bg-black/40 backdrop-blur-xl p-8 md:p-10 rounded-3xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
+            className="relative bg-black/40 backdrop-blur-2xl p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-6 shadow-2xl"
           >
-            <div className="relative">
-              <input
-                type="text"
-                name="user_name"
-                placeholder="Your Name 📛"
-                required
-                className="w-full p-4 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:border-white/30 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all font-medium placeholder-gray-400"
-              />
-            </div>
-
-            <div className="relative">
-              <input
-                type="email"
-                name="user_email"
-                placeholder="Your Email 📧"
-                required
-                className="w-full p-4 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:border-white/30 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all font-medium placeholder-gray-400"
-              />
-            </div>
-
-            <textarea
-              name="message"
-              placeholder="Your Message 💬"
-              required
-              className="w-full p-4 rounded-xl bg-white/5 border border-white/10 h-36 focus:outline-none focus:border-white/30 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all font-medium placeholder-gray-400 resize-none"
-            />
-
-            {statusMsg.text && (
-              <div
-                className={`p-3 rounded-xl text-center font-medium ${
-                  statusMsg.type === "success"
-                    ? "bg-green-500/20 text-green-300 border border-green-500/50"
-                    : "bg-red-500/20 text-red-300 border border-red-500/50"
-                }`}
-              >
-                {statusMsg.text}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-400 ml-1">Name</label>
+                <input
+                  type="text"
+                  name="user_name"
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-red-500/50 focus:bg-white/10 transition-all text-white"
+                  placeholder="Your name"
+                />
               </div>
-            )}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-400 ml-1">Email</label>
+                <input
+                  type="email"
+                  name="user_email"
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-red-500/50 focus:bg-white/10 transition-all text-white"
+                  placeholder="name@email.com"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-400 ml-1">Message</label>
+              <textarea
+                name="message"
+                required
+                rows={4}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-red-500/50 focus:bg-white/10 transition-all text-white resize-none"
+                placeholder="Tell me about your project..."
+              />
+            </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`transition-all duration-300 p-4 rounded-xl font-bold tracking-wide mt-2 ${
-                isSubmitting
-                  ? "bg-white/50 text-black/50 cursor-not-allowed"
-                  : "bg-white hover:bg-gray-200 text-black shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:-translate-y-1"
-              }`}
+              className="w-full bg-white text-black font-bold py-5 rounded-xl hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-lg shadow-[0_10px_20px_rgba(255,255,255,0.1)] active:scale-[0.99]"
             >
               {isSubmitting ? "Sending..." : "Send Message"}
             </button>
+
+            {statusMsg.text && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`p-4 rounded-xl text-center font-medium ${
+                  statusMsg.type === "success" 
+                    ? "bg-green-500/10 text-green-400 border border-green-500/20" 
+                    : "bg-red-500/10 text-red-400 border border-red-500/20"
+                }`}
+              >
+                {statusMsg.text}
+              </motion.div>
+            )}
           </form>
         </div>
-
       </motion.div>
     </section>
   );

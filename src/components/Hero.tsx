@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen text-white overflow-hidden flex items-center justify-center px-6 md:px-12 py-20">
+    <section id="home" className="relative min-h-screen text-white overflow-hidden flex items-center justify-center px-6 md:px-12 py-20">
       <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-7xl gap-10 md:gap-16 lg:gap-24">
         
         {/* Left/Top: Profile Image */}

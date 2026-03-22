@@ -10,7 +10,6 @@ import {
   SiFastapi, SiPandas, SiGooglecolab, SiPycharm
 } from "react-icons/si";
 
-
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
@@ -28,7 +27,7 @@ const itemVariants = {
 
 export default function About() {
   return (
-    <section className="py-24 px-6 max-w-5xl mx-auto">
+    <section id="about" className="min-h-screen py-24 px-6 max-w-6xl mx-auto flex flex-col items-center justify-center">
       <h2 className="text-4xl font-bold text-center mb-16 text-white tracking-tight">Tech Arsenal</h2>
 
       <motion.div 
@@ -36,7 +35,7 @@ export default function About() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.1 }}
-        className="flex flex-col gap-10"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 w-full"
       >
         <SkillCategory title="Languages">
           <Skill icon={<SiPython />} color="bg-yellow-500/80 border border-yellow-500/30" name="Python" />
@@ -81,7 +80,6 @@ export default function About() {
   );
 }
 
-/* CATEGORY WRAPPER */
 function SkillCategory({
   title,
   children,
@@ -90,8 +88,8 @@ function SkillCategory({
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <h3 className="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300">
+    <div className="space-y-6">
+      <h3 className="text-xl font-semibold text-gray-300 border-l-4 border-red-500 pl-4">
         {title}
       </h3>
       <div className="flex flex-wrap gap-3">{children}</div>
@@ -99,7 +97,6 @@ function SkillCategory({
   );
 }
 
-/* INDIVIDUAL SKILL BADGE */
 function Skill({
   icon,
   name,
@@ -112,16 +109,12 @@ function Skill({
   return (
     <motion.div
       variants={itemVariants}
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.05, y: -5 }}
       whileTap={{ scale: 0.95 }}
-      className={`relative flex items-center gap-2 px-5 py-2.5 rounded-full text-white/90 text-sm font-medium cursor-default shadow-lg ${color} backdrop-blur-sm`}
+      className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-white/90 text-sm font-medium cursor-default shadow-lg ${color} backdrop-blur-sm transition-all`}
     >
       <span className="text-xl drop-shadow-md">{icon}</span>
       <span className="tracking-wide drop-shadow-md">{name}</span>
-      {/* glow effect */}
-      <span
-        className={`absolute inset-0 rounded-full opacity-0 hover:opacity-40 blur-xl transition-opacity duration-300 ${color}`}
-      />
     </motion.div>
   );
 }
