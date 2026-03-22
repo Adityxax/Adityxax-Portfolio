@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import {
   SiPython, SiCplusplus, SiTypescript,
   SiReact, SiNextdotjs, SiHtml5, SiCss, SiTailwindcss,
-  SiNodedotjs, SiMongodb, SiMysql, SiOpencv, SiPytorch, 
-  SiScikitlearn, SiGit, SiDocker, SiVsco, SiAndroid, 
+  SiNodedotjs, SiMongodb, SiMysql, SiOpencv, SiPytorch,
+  SiScikitlearn, SiGit, SiDocker, SiVsco, SiAndroid,
   SiFastapi, SiPandas, SiGooglecolab, SiPycharm
 } from "react-icons/si";
 
@@ -30,7 +30,7 @@ export default function About() {
     <section id="about" className="min-h-screen py-24 px-6 max-w-6xl mx-auto flex flex-col items-center justify-center">
       <h2 className="text-4xl font-bold text-center mb-16 text-white tracking-tight">Tech Arsenal</h2>
 
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="show"
@@ -48,7 +48,7 @@ export default function About() {
           <Skill icon={<SiTailwindcss />} color="bg-teal-500/80 border border-teal-500/30" name="Tailwind" />
           <Skill icon={<SiNextdotjs />} color="bg-black/80 border border-white/20" name="Next.js" />
           <Skill icon={<SiHtml5 />} color="bg-orange-600/80 border border-orange-600/30" name="HTML" />
-          <Skill icon={<SiCss />} color="bg-blue-600/80 border border-blue-600/30" name="CSS" />         
+          <Skill icon={<SiCss />} color="bg-blue-600/80 border border-blue-600/30" name="CSS" />
         </SkillCategory>
 
         <SkillCategory title="Backend">
@@ -60,10 +60,10 @@ export default function About() {
 
         <SkillCategory title="AI / ML">
           <Skill icon={<SiOpencv />} color="bg-red-500/80 border border-red-500/30" name="OpenCV" />
-          <Skill icon={<Image src="/icons/ultralytics.svg" width={24} height={24} alt="Ultralytics" />} color="bg-purple-500/80 border border-purple-500/30" name="Ultralytics" />
-          <Skill icon={<Image src="/icons/cmake.svg" width={24} height={24} alt="CMake" />} color="bg-blue-500/80 border border-blue-500/30" name="CMake" />
+          <Skill icon={<Image src="/icons/ultralytics.svg" width={20} height={20} alt="Ultralytics" />} color="bg-purple-500/80 border border-purple-500/30" name="Ultralytics" />
+          <Skill icon={<Image src="/icons/cmake.svg" width={20} height={20} alt="CMake" />} color="bg-yellow-500/80 border border-yellow-500/30" name="CMake" />
           <Skill icon={<SiPytorch />} color="bg-red-600/80 border border-red-600/30" name="PyTorch" />
-          <Skill icon={<SiScikitlearn />} color="bg-yellow-500/80 border border-yellow-500/30" name="Scikit-Learn" />
+          <Skill icon={<SiScikitlearn />} color="bg-blue-500/80 border border-blue-500/30" name="Scikit-Learn" />
           <Skill icon={<SiPandas />} color="bg-green-500/80 border border-green-500/30" name="Pandas" />
         </SkillCategory>
 
@@ -113,8 +113,8 @@ function Skill({
       whileTap={{ scale: 0.95 }}
       className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-white/90 text-sm font-medium cursor-default shadow-lg ${color} backdrop-blur-sm transition-all`}
     >
-      <span className="text-xl drop-shadow-md">{icon}</span>
-      <span className="tracking-wide drop-shadow-md">{name}</span>
+      <span className="text-xl drop-shadow-md w-6 h-6 flex items-center justify-center shrink-0">{icon}</span>
+      <span className="tracking-wide drop-shadow-md whitespace-nowrap">{name}</span>
     </motion.div>
   );
 }
