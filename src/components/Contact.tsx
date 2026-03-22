@@ -52,29 +52,33 @@ export default function Contact() {
         <form
           ref={form}
           onSubmit={sendEmail}
-          className="flex flex-col gap-6 bg-black/50 backdrop-blur-md p-8 rounded-2xl border border-white/10"
+          className="flex flex-col gap-6 bg-black/40 backdrop-blur-xl p-8 md:p-12 rounded-3xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
         >
-          <input
-            type="text"
-            name="user_name"
-            placeholder="Your Name📛"
-            required
-            className="p-4 rounded bg-white/5 border border-white/10 focus:outline-none focus:border-blue-400"
-          />
+          <div className="relative">
+            <input
+              type="text"
+              name="user_name"
+              placeholder="Your Name 📛"
+              required
+              className="w-full p-4 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:border-white/30 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all font-medium placeholder-gray-400"
+            />
+          </div>
 
-          <input
-            type="email"
-            name="user_email"
-            placeholder="Your Email📧"
-            required
-            className="p-4 rounded bg-white/5 border border-white/10 focus:outline-none focus:border-blue-400"
-          />
+          <div className="relative">
+            <input
+              type="email"
+              name="user_email"
+              placeholder="Your Email 📧"
+              required
+              className="w-full p-4 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:border-white/30 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all font-medium placeholder-gray-400"
+            />
+          </div>
 
           <textarea
             name="message"
-            placeholder="Your Message💬"
+            placeholder="Your Message 💬"
             required
-            className="p-4 rounded bg-white/5 border border-white/10 h-40 focus:outline-none focus:border-blue-400"
+            className="w-full p-4 rounded-xl bg-white/5 border border-white/10 h-40 focus:outline-none focus:border-white/30 focus:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all font-medium placeholder-gray-400 resize-none"
           />
 
           {statusMsg.text && (
@@ -92,10 +96,10 @@ export default function Contact() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`transition p-4 rounded font-semibold text-white ${
+            className={`transition-all duration-300 p-4 rounded-xl font-bold tracking-wide mt-2 ${
               isSubmitting
-                ? "bg-blue-500/50 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600"
+                ? "bg-white/50 text-black/50 cursor-not-allowed"
+                : "bg-white hover:bg-gray-200 text-black shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:-translate-y-1"
             }`}
           >
             {isSubmitting ? "Sending..." : "Send Message"}

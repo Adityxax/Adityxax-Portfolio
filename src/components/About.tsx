@@ -11,51 +11,72 @@ import {
 } from "react-icons/si";
 
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
+
 export default function About() {
   return (
-    <section className="py-16 px-6 max-w-5xl mx-auto">
-      <h2 className="text-3xl font-bold text-center mb-10">🛠 Tech Arsenal</h2>
+    <section className="py-24 px-6 max-w-5xl mx-auto">
+      <h2 className="text-4xl font-bold text-center mb-16 text-white tracking-tight">Tech Arsenal</h2>
 
-      <div className="flex flex-col gap-8">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.1 }}
+        className="flex flex-col gap-10"
+      >
         <SkillCategory title="Languages">
-          <Skill icon={<SiPython />} color="bg-yellow-500" name="Python" />
-          <Skill icon={<SiCplusplus />} color="bg-blue-700" name="C++" />
-          <Skill icon={<SiTypescript />} color="bg-blue-500" name="TypeScript" />
+          <Skill icon={<SiPython />} color="bg-yellow-500/80 border border-yellow-500/30" name="Python" />
+          <Skill icon={<SiCplusplus />} color="bg-blue-700/80 border border-blue-700/30" name="C++" />
+          <Skill icon={<SiTypescript />} color="bg-blue-500/80 border border-blue-500/30" name="TypeScript" />
         </SkillCategory>
 
         <SkillCategory title="Frontend">
-          <Skill icon={<SiReact />} color="bg-cyan-500" name="React" />
-          <Skill icon={<SiTailwindcss />} color="bg-teal-500" name="Tailwind" />
-          <Skill icon={<SiNextdotjs />} color="bg-black" name="Next.js" />
-          <Skill icon={<SiHtml5 />} color="bg-orange-600" name="HTML" />
-          <Skill icon={<SiCss />} color="bg-blue-600" name="CSS" />         
+          <Skill icon={<SiReact />} color="bg-cyan-500/80 border border-cyan-500/30" name="React" />
+          <Skill icon={<SiTailwindcss />} color="bg-teal-500/80 border border-teal-500/30" name="Tailwind" />
+          <Skill icon={<SiNextdotjs />} color="bg-black/80 border border-white/20" name="Next.js" />
+          <Skill icon={<SiHtml5 />} color="bg-orange-600/80 border border-orange-600/30" name="HTML" />
+          <Skill icon={<SiCss />} color="bg-blue-600/80 border border-blue-600/30" name="CSS" />         
         </SkillCategory>
 
         <SkillCategory title="Backend">
-          <Skill icon={<SiNodedotjs />} color="bg-green-600" name="Node.js" />
-          <Skill icon={<SiFastapi />} color="bg-blue-700" name="Fastapi" />
-          <Skill icon={<SiMongodb />} color="bg-green-700" name="MongoDB" />
-          <Skill icon={<SiMysql />} color="bg-blue-700" name="MySQL" />
+          <Skill icon={<SiNodedotjs />} color="bg-green-600/80 border border-green-600/30" name="Node.js" />
+          <Skill icon={<SiFastapi />} color="bg-blue-700/80 border border-blue-700/30" name="Fastapi" />
+          <Skill icon={<SiMongodb />} color="bg-green-700/80 border border-green-700/30" name="MongoDB" />
+          <Skill icon={<SiMysql />} color="bg-blue-700/80 border border-blue-700/30" name="MySQL" />
         </SkillCategory>
 
         <SkillCategory title="AI / ML">
-          <Skill icon={<SiOpencv />} color="bg-red-500" name="OpenCV" />
-          <Skill icon={<Image src="/icons/ultralytics.svg" width={24} height={24} alt="Ultralytics" />} color="bg-purple-500" name="Ultralytics" />
-          <Skill icon={<Image src="/icons/cmake.svg" width={24} height={24} alt="CMake" />} color="bg-blue-500" name="CMake" />
-          <Skill icon={<SiPytorch />} color="bg-red-600" name="PyTorch" />
-          <Skill icon={<SiScikitlearn />} color="bg-yellow-500" name="Scikit-Learn" />
-          <Skill icon={<SiPandas />} color="bg-green-500" name="Pandas" />
+          <Skill icon={<SiOpencv />} color="bg-red-500/80 border border-red-500/30" name="OpenCV" />
+          <Skill icon={<Image src="/icons/ultralytics.svg" width={24} height={24} alt="Ultralytics" />} color="bg-purple-500/80 border border-purple-500/30" name="Ultralytics" />
+          <Skill icon={<Image src="/icons/cmake.svg" width={24} height={24} alt="CMake" />} color="bg-blue-500/80 border border-blue-500/30" name="CMake" />
+          <Skill icon={<SiPytorch />} color="bg-red-600/80 border border-red-600/30" name="PyTorch" />
+          <Skill icon={<SiScikitlearn />} color="bg-yellow-500/80 border border-yellow-500/30" name="Scikit-Learn" />
+          <Skill icon={<SiPandas />} color="bg-green-500/80 border border-green-500/30" name="Pandas" />
         </SkillCategory>
 
         <SkillCategory title="Tools & Platforms">
-          <Skill icon={<SiGit />} color="bg-orange-600" name="Git" />
-          <Skill icon={<SiDocker />} color="bg-blue-500" name="Docker" />
-          <Skill icon={<SiVsco />} color="bg-blue-600" name="VS Code" />
-          <Skill icon={<SiGooglecolab />} color="bg-green-600" name="Colab" />
-          <Skill icon={<SiPycharm />} color="bg-green-700" name="PyCharm" />
-          <Skill icon={<SiAndroid />} color="bg-green-600" name="Android" />
+          <Skill icon={<SiGit />} color="bg-orange-600/80 border border-orange-600/30" name="Git" />
+          <Skill icon={<SiDocker />} color="bg-blue-500/80 border border-blue-500/30" name="Docker" />
+          <Skill icon={<SiVsco />} color="bg-blue-600/80 border border-blue-600/30" name="VS Code" />
+          <Skill icon={<SiGooglecolab />} color="bg-green-600/80 border border-green-600/30" name="Colab" />
+          <Skill icon={<SiPycharm />} color="bg-green-700/80 border border-green-700/30" name="PyCharm" />
+          <Skill icon={<SiAndroid />} color="bg-green-600/80 border border-green-600/30" name="Android" />
         </SkillCategory>
-      </div>
+      </motion.div>
     </section>
   );
 }
@@ -90,15 +111,16 @@ function Skill({
 }) {
   return (
     <motion.div
-      whileHover={{ scale: 1.1 }}
+      variants={itemVariants}
+      whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-white text-sm font-medium cursor-default ${color}`}
+      className={`relative flex items-center gap-2 px-5 py-2.5 rounded-full text-white/90 text-sm font-medium cursor-default shadow-lg ${color} backdrop-blur-sm`}
     >
-      <span className="text-lg">{icon}</span>
-      <span>{name}</span>
+      <span className="text-xl drop-shadow-md">{icon}</span>
+      <span className="tracking-wide drop-shadow-md">{name}</span>
       {/* glow effect */}
       <span
-        className={`absolute inset-0 rounded-full opacity-0 hover:opacity-30 blur-md transition-opacity duration-300 ${color}`}
+        className={`absolute inset-0 rounded-full opacity-0 hover:opacity-40 blur-xl transition-opacity duration-300 ${color}`}
       />
     </motion.div>
   );

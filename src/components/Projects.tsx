@@ -65,16 +65,20 @@ export default function Projects() {
       <div className="relative w-full max-w-5xl group">
 
         {/* Project Card */}
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          onDragEnd={handleDragEnd}
-          className="rounded-3xl border border-white/10 bg-black/60 backdrop-blur-x2 shadow-[0_0_50px_rgba(0,0,0,0.6)] overflow-hidden cursor-grab active:cursor-grabbing"
-        >
+        <div className="relative p-[1px] rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.6)]">
+          {/* Animated Gradient Border Layer */}
+          <div className="absolute inset-0 bg-gradient-to-r from-red-500/50 via-gray-500/20 to-blue-500/50 opacity-40 blur-sm"></div>
+          
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={handleDragEnd}
+            className="relative rounded-3xl bg-black/80 backdrop-blur-2xl overflow-hidden cursor-grab active:cursor-grabbing border-none h-full"
+          >
 
           {/* Browser Header */}
           <div className="flex items-center gap-2 px-6 py-4 border-b border-white/10">
@@ -107,7 +111,7 @@ export default function Projects() {
                 {project.title}
               </h3>
 
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-gray-300 leading-relaxed text-lg">
                 {project.description}
               </p>
 
@@ -115,9 +119,10 @@ export default function Projects() {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block mt-6 text-blue-400 hover:text-blue-300 text-lg"
+                className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 group shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] w-fit"
               >
-                View Project →
+                View Project 
+                <FiChevronRight className="group-hover:translate-x-1 transition-transform" />
               </a>
 
             </div>
@@ -149,6 +154,7 @@ export default function Projects() {
           transition-all duration-300 shadow-lg text-white">
           <FiChevronRight size={26} />
         </button>
+        </div>
 
       </div>
 
