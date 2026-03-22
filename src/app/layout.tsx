@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Aditya Xax Portfolio",
   description: "Personal portfolio and ML project showcase",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

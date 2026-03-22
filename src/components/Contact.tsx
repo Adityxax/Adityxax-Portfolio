@@ -90,12 +90,13 @@ export default function Contact() {
 
         {/* Right Column: Form */}
         <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-red-500/20 to-blue-500/20 rounded-[2rem] blur-xl opacity-0 group-hover:opacity-100 transition duration-1000"></div>
+          {/* Persistent Glow Effect */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-red-500/20 to-blue-500/20 rounded-[2rem] blur-2xl opacity-40 lg:opacity-0 lg:group-hover:opacity-60 transition duration-1000"></div>
           
           <form
             ref={form}
             onSubmit={sendEmail}
-            className="relative bg-black/40 backdrop-blur-2xl p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-6 shadow-2xl"
+            className="relative bg-[#0a0a0a]/80 backdrop-blur-3xl p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-6 shadow-2xl"
           >
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
