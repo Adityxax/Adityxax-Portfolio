@@ -3,12 +3,13 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaFacebook, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaFacebook, FaEnvelope, FaInstagram } from "react-icons/fa";
 import { PiMicrosoftOutlookLogoFill } from "react-icons/pi";
 
 const socials = [
   { name: "GitHub", icon: <FaGithub />, url: "https://github.com/Adityxax", color: "hover:text-white hover:border-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]" },
   { name: "LinkedIn", icon: <FaLinkedin />, url: "https://www.linkedin.com/in/adityxax/", color: "hover:text-blue-400 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(96,165,250,0.3)]" },
+  { name: "Instagram", icon: <FaInstagram />, url: "https://www.instagram.com/adityxax/", color: "hover:text-pink-500 hover:border-pink-500 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]" },
   { name: "Facebook", icon: <FaFacebook />, url: "https://www.facebook.com/adityxax", color: "hover:text-blue-600 hover:border-blue-600 hover:shadow-[0_0_20px_rgba(37,99,235,0.3)]" },
   { name: "Mail", icon: <FaEnvelope />, url: "mailto:officialadi2003@gmail.com", color: "hover:text-red-500 hover:border-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]" },
   { name: "Outlook", icon: <PiMicrosoftOutlookLogoFill />, url: "mailto:adityxax2003@outlook.com", color: "hover:text-[#0078d4] hover:border-[#0078d4] hover:shadow-[0_0_20px_rgba(0,120,212,0.3)]" },
@@ -92,7 +93,7 @@ export default function Contact() {
         <div className="relative group">
           {/* Persistent Glow Effect */}
           <div className="absolute -inset-1 bg-gradient-to-r from-red-500/20 to-blue-500/20 rounded-[2rem] blur-2xl opacity-40 lg:opacity-0 lg:group-hover:opacity-60 transition duration-1000"></div>
-          
+
           <form
             ref={form}
             onSubmit={sendEmail}
@@ -144,11 +145,10 @@ export default function Contact() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`p-4 rounded-xl text-center font-medium ${
-                  statusMsg.type === "success" 
-                    ? "bg-green-500/10 text-green-400 border border-green-500/20" 
+                className={`p-4 rounded-xl text-center font-medium ${statusMsg.type === "success"
+                    ? "bg-green-500/10 text-green-400 border border-green-500/20"
                     : "bg-red-500/10 text-red-400 border border-red-500/20"
-                }`}
+                  }`}
               >
                 {statusMsg.text}
               </motion.div>
