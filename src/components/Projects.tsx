@@ -35,6 +35,20 @@ const projects = [
     link: "https://github.com/Adityxax/Anti-spoofing-and-Face-Detector",
     image: "/projects/spoofing.png",
   },
+  {
+    title: "DocuScan",
+    description:
+      "A lean 'Photo-to-Document' utility using a pure OpenCV pipeline for high-quality document enhancement and PDF merging.",
+    link: "https://github.com/Adityxax/DocuScan",
+    image: "/projects/Docuscan_fixed.png",
+  },
+  {
+    title: "QR & Barcode Generator",
+    description:
+      "A fast and efficient QR and Barcode generation tool with a sleek, minimalist interface.",
+    link: "https://github.com/Adityxax/QR-Barcode-Generator",
+    image: "/projects/qr_barcode.png",
+  },
 ];
 
 export default function Projects() {
@@ -81,7 +95,7 @@ export default function Projects() {
               <div className="relative group">
                 {/* Gradient Border Wrap */}
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-blue-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                
+
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-lg">
                   <Image
                     src={projects[index].image}
@@ -101,7 +115,7 @@ export default function Projects() {
               <p className="text-gray-400 text-lg leading-relaxed">
                 {projects[index].description}
               </p>
-              
+
               <div className="pt-4 flex flex-wrap gap-4">
                 <a
                   href={projects[index].link}
@@ -124,11 +138,10 @@ export default function Projects() {
             <button
               key={i}
               onClick={() => setIndex(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === i 
-                  ? "w-8 bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]" 
+              className={`h-2 rounded-full transition-all duration-300 ${index === i
+                  ? "w-8 bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"
                   : "w-2 bg-white/20 hover:bg-white/40"
-              }`}
+                }`}
               aria-label={`Go to project ${i + 1}`}
             />
           ))}
