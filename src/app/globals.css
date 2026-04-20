@@ -41,46 +41,6 @@ body {
 .nav-link-hover:hover {
   letter-spacing: 0.18em;
 }
-
-
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes spin-slow-reverse {
-  from { transform: rotate(360deg); }
-  to   { transform: rotate(0deg); }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 6s linear infinite;
-}
-
-.animate-spin-slow-reverse {
-  animation: spin-slow-reverse 8s linear infinite;
-}
-
-/* CSS ambient blobs for mobile background */
-@keyframes blob {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%       { transform: translate(20px, -30px) scale(1.05); }
-  66%       { transform: translate(-15px, 20px) scale(0.95); }
-}
-
-.animate-blob {
-  animation: blob 10s ease-in-out infinite;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-  animation-delay: 4s;
-}
-
 /* Respect user's reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

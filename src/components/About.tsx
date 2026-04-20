@@ -123,7 +123,7 @@ function Skill({
       // Disable hover/tap transforms on mobile — prevents jank from touch events
       whileHover={isMobile ? undefined : { scale: 1.05, y: -5 }}
       whileTap={isMobile ? undefined : { scale: 0.95 }}
-      className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-white/90 text-sm font-medium cursor-default shadow-lg ${color} backdrop-blur-sm transition-all`}
+      className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-white/90 text-sm font-medium cursor-default shadow-lg ${color} transition-all`}
     >
       <span className="text-xl drop-shadow-md w-6 h-6 flex items-center justify-center shrink-0">{icon}</span>
       <span className="tracking-wide drop-shadow-md whitespace-nowrap">{name}</span>

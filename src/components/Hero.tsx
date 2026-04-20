@@ -26,14 +26,17 @@ export default function Hero() {
           transition={{ duration: 1.2, ease: "easeOut" }}
           className="relative shrink-0 w-80 sm:w-96 md:w-[450px] lg:w-[550px]"
         >
-          {/* Background Glow - with our red theme */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[120%] aspect-square bg-red-500/[0.08] blur-[120px] rounded-full pointer-events-none [will-change:transform,filter]" />
+          {/* Optimized Background Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[100%] aspect-square bg-red-500/[0.05] blur-[80px] rounded-full pointer-events-none" />
 
           <motion.div
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="relative z-10 [will-change:transform]"
+            className="relative z-10"
           >
+            {/* Optimized shadow replacement for the cutout */}
+            <div className="absolute inset-[15%] bg-red-600/15 blur-[50px] rounded-full -z-10 pointer-events-none" />
+            
             <Image
               src="/Adi_nobg.png"
               alt="Aditya"
@@ -41,7 +44,7 @@ export default function Hero() {
               height={800}
               quality={90}
               priority
-              className="w-full h-auto object-contain drop-shadow-[0_0_40px_rgba(239,68,68,0.4)]"
+              className="w-full h-auto object-contain"
             />
           </motion.div>
 
