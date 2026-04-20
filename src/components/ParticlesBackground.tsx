@@ -7,11 +7,7 @@ import { loadFull } from "tsparticles";
 // This avoids the 400 KB tsparticles JS bundle being parsed & executed on low-end phones.
 function MobileBackground() {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-      <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-red-600/10 blur-[80px] animate-blob" />
-      <div className="absolute top-[30%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-600/10 blur-[80px] animate-blob animation-delay-2000" />
-      <div className="absolute bottom-[-10%] left-[20%] w-[55vw] h-[55vw] rounded-full bg-cyan-600/8 blur-[80px] animate-blob animation-delay-4000" />
-    </div>
+    <div className="fixed inset-0 -z-10 pointer-events-none bg-gradient-to-b from-[#1a0003] via-[#0d0002] to-black" />
   );
 }
 
@@ -49,7 +45,7 @@ export default function ParticlesBackground() {
           background: { color: "transparent" },
           fpsLimit: 120,
           particles: {
-            number: { value: 145, density: { enable: true } },
+            number: { value: 120, density: { enable: true } },
             shadow: { enable: true, color: "#00f0ff", blur: 10 },
             color: { value: ["#ff0000", "#56e4ee", "#6a33ea", "#2cee73", "#ffcc00"] },
             shape: { type: "circle" },

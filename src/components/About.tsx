@@ -35,8 +35,8 @@ export default function About() {
 
   return (
     <section id="about" className="min-h-screen py-24 px-6 max-w-6xl mx-auto flex flex-col items-center justify-center">
-      <h2 className="text-4xl md:text-5xl font-black text-center mb-16 text-white tracking-tight">
-        Tech <span className="text-outline">Arsenal</span>
+      <h2 className="text-4xl md:text-5xl font-black text-center mb-16 tracking-tight">
+        <span className="text-red-500">Tech</span> <span className="text-outline">Arsenal</span>
       </h2>
 
       <motion.div

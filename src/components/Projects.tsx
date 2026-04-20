@@ -94,9 +94,13 @@ function FeaturedRow({
       />
 
       <div className="relative flex items-center gap-6 lg:gap-10 py-10 md:py-14 px-4">
-        <span className="text-gray-700 font-mono text-sm shrink-0 w-7">
+        <motion.span
+          animate={{ color: isHovered ? "rgb(248 113 113)" : "rgb(203 213 225)" }}
+          transition={{ duration: 0.25 }}
+          className="font-mono text-sm shrink-0 w-7"
+        >
           {String(index + 1).padStart(2, "0")}
-        </span>
+        </motion.span>
 
         <div className="flex-1 min-w-0">
           <motion.h3
@@ -152,7 +156,7 @@ function FeaturedRow({
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 exit={{ opacity: 0, scale: 0.9, x: 24 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}
-                className="w-full h-full"
+                className="w-full h-full rounded-2xl"
               >
                 <div className="relative w-full h-[175px] lg:h-[240px]">
                   <Image src={project.image} alt={project.title} fill sizes="(max-width: 1024px) 280px, 400px" className="object-contain rounded-2xl" />
@@ -304,7 +308,7 @@ function ArchiveRow({
         <div className="relative h-40 rounded-xl overflow-hidden">
           <Image src={project.image} alt={project.title} fill sizes="100vw" className="object-contain" />
         </div>
-        <h3 className="font-black tracking-tight uppercase text-xl text-white">{project.title}</h3>
+        <h3 className="font-black tracking-tight uppercase text-xl text-red-500">{project.title}</h3>
         <p className="text-gray-500 text-sm leading-relaxed">{project.description}</p>
         <div className="flex gap-2 flex-wrap">
           {project.tags.map((tag) => (
@@ -326,9 +330,12 @@ function MilestoneDot({ threshold, scrollYProgress }: { threshold: number; scrol
   const glow = useTransform(smoothed, (v) =>
     v >= threshold ? "0 0 12px 4px rgba(239,68,68,0.55)" : "none"
   );
+  const scale = useTransform(smoothed, [threshold - 0.05, threshold], [0, 1]);
+  const opacity = useTransform(smoothed, [threshold - 0.05, threshold], [0, 1]);
+
   return (
     <motion.div
-      style={{ boxShadow: glow, backgroundColor: color }}
+      style={{ boxShadow: glow, backgroundColor: color, scale, opacity }}
       className="w-3 h-3 rounded-full transition-none"
     />
   );
@@ -361,7 +368,7 @@ function OtherProjectsSection({ onCollapse }: { onCollapse: () => void }) {
           <div>
 
             <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase">
-              Other <span className="text-outline">Projects</span>
+              <span className="text-red-500">Other</span> <span className="text-outline">Projects</span>
             </h2>
           </div>
           <span className="text-gray-600 text-xs font-mono tracking-widest uppercase shrink-0">
@@ -411,18 +418,43 @@ function OtherProjectsSection({ onCollapse }: { onCollapse: () => void }) {
         ))}
       </div>
 
-      {/* Mobile: stacked list */}
-      <div className="md:hidden">
-        {archiveProjects.map((project, i) => (
-          <ArchiveRow
-            key={i}
-            project={project}
-            index={i}
-            isHovered={hoveredIndex === i}
-            onHoverStart={() => setHoveredIndex(i)}
-            onHoverEnd={() => setHoveredIndex(null)}
+      {/* Mobile: stacked list with right-side scroll-line */}
+      <div className="md:hidden relative">
+        {/* Scroll indicator - Right side */}
+        <div className="absolute top-0 bottom-0 right-1 w-px pointer-events-none z-10">
+          <div className="absolute inset-0 bg-white/8" />
+          <motion.div
+            style={{ scaleY, transformOrigin: "top" }}
+            className="absolute inset-0 bg-red-500/70"
           />
-        ))}
+          {archiveProjects.map((_, i) => {
+            const n = archiveProjects.length;
+            const pct = ((2 * i + 1) / (2 * n)) * 100;
+            const threshold = (2 * i + 1) / (2 * n);
+            return (
+              <div
+                key={i}
+                className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
+                style={{ top: `${pct}%` }}
+              >
+                <MilestoneDot threshold={threshold} scrollYProgress={scrollYProgress} />
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="pr-6">
+          {archiveProjects.map((project, i) => (
+            <ArchiveRow
+              key={i}
+              project={project}
+              index={i}
+              isHovered={hoveredIndex === i}
+              onHoverStart={() => setHoveredIndex(i)}
+              onHoverEnd={() => setHoveredIndex(null)}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Collapse */}
@@ -452,7 +484,7 @@ export default function Projects() {
     setTimeout(() => {
       const target = document.getElementById("other-projects-heading");
       target?.scrollIntoView({ behavior: "smooth", block: "start" });
-      
+
       // Re-enable interactions after scroll finishes
       setTimeout(() => setIsScrolling(false), 1000);
     }, 100);
@@ -463,7 +495,7 @@ export default function Projects() {
     // Scroll up FIRST while the element is still in the DOM
     const target = document.getElementById("projects-heading");
     target?.scrollIntoView({ behavior: "smooth", block: "start" });
-    
+
     // Wait for the smooth scroll to finish before removing the massive element
     setTimeout(() => {
       setShowArchive(false);
@@ -478,7 +510,7 @@ export default function Projects() {
         {/* Section header */}
         <div id="projects-heading" className="scroll-mt-28 flex flex-col sm:flex-row sm:items-end justify-between pb-6 gap-6">
           <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase">
-            <span className="text-white">PRO</span><span className="text-outline">JECTS</span>
+            <span className="text-red-500">PRO</span><span className="text-outline">JECTS</span>
           </h2>
 
           {!showArchive && (
@@ -515,14 +547,14 @@ export default function Projects() {
                 <span className="absolute top-3 left-3 text-gray-500 font-mono text-xs">{String(i + 1).padStart(2, "0")}</span>
               </div>
               <div className="p-5 space-y-3">
-                <h3 className="text-xl font-black text-white uppercase tracking-tight">{project.title}</h3>
+                <h3 className="text-xl font-black text-red-500 uppercase tracking-tight">{project.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{project.description}</p>
                 <div className="flex flex-wrap gap-2 pt-1">
                   {project.tags.map((tag) => (
                     <span key={tag} className="text-[10px] font-semibold tracking-widest uppercase text-gray-500 border border-white/10 rounded-full px-2 py-0.5">{tag}</span>
                   ))}
                 </div>
-                <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-white border border-white/20 rounded-lg px-4 py-2 hover:bg-white/10 transition-colors mt-1">
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-red-500 border border-red-500/40 rounded-lg px-4 py-2 hover:bg-red-500/10 transition-colors mt-1">
                   View Project <FaExternalLinkAlt size={12} />
                 </a>
               </div>

@@ -52,7 +52,7 @@ export default function Contact() {
   return (
     <section id="contact" className="min-h-screen text-white px-6 md:px-12 py-24 flex flex-col items-center justify-center">
       <h2 className="text-4xl md:text-5xl font-black mb-14 text-center tracking-tight">
-        Get In <span className="text-outline">Touch</span>
+        <span className="text-red-500">Get In</span> <span className="text-outline">Touch</span>
       </h2>
 
       <motion.div
