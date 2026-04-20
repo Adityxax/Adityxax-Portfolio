@@ -26,23 +26,46 @@ export default function Hero() {
           transition={{ duration: 1.2, ease: "easeOut" }}
           className="relative shrink-0 w-80 sm:w-96 md:w-[450px] lg:w-[550px]"
         >
-          {/* Background Glow - matches Souvik's accent style but with our red theme */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[120%] aspect-square bg-red-500/[0.08] blur-[120px] rounded-full pointer-events-none" />
+          {/* Background Glow - with our red theme */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[120%] aspect-square bg-red-500/[0.08] blur-[120px] rounded-full pointer-events-none [will-change:transform,filter]" />
 
           <motion.div
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="relative z-10"
+            className="relative z-10 [will-change:transform]"
           >
             <Image
               src="/Adi_nobg.png"
               alt="Aditya"
               width={600}
               height={800}
+              quality={90}
               priority
               className="w-full h-auto object-contain drop-shadow-[0_0_40px_rgba(239,68,68,0.4)]"
             />
           </motion.div>
+
+          {/* Mobile-only Identity: Appears right below image */}
+          <div className="md:hidden mt-[-2.5rem] flex flex-col items-center text-center">
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight uppercase">
+              <span className="text-red-500">ADI</span><span className="text-outline">TYA</span>
+            </h1>
+            <p className="mt-2 text-base sm:text-lg font-medium">
+              <TypeAnimation
+                sequence={[
+                  "ML Engineer", 1800,
+                  "Backend Developer", 1800,
+                  "Explorer", 1800,
+                  "Full Stack Developer", 1800,
+                  "Problem Solver", 1800,
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+                className="bg-gradient-to-br from-zinc-100 to-zinc-500 bg-clip-text text-transparent font-semibold"
+              />
+            </p>
+          </div>
         </motion.div>
 
         {/* Right/Bottom: Text Content */}
@@ -54,27 +77,31 @@ export default function Hero() {
         >
 
 
-          <h1 className="relative text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
-            <span className="text-red-500">ADI</span><span className="text-outline">TYA</span>
-          </h1>
+          {/* Desktop-only Identity */}
+          <div className="hidden md:block">
+            <h1 className="text-6xl lg:text-7xl font-black tracking-tight uppercase">
+              <span className="text-red-500">ADI</span><span className="text-outline">TYA</span>
+            </h1>
 
-          <p className="mt-4 text-lg md:text-xl font-medium min-h-[2rem]">
-            <TypeAnimation
-              sequence={[
-                "ML Engineer", 1800,
-                "Backend Developer", 1800,
-                "Explorer", 1800,
-                "Full Stack Developer", 1800,
-                "Problem Solver", 1800,
-              ]}
-              wrapper="span"
-              speed={50}
-              repeat={Infinity}
-              className="bg-gradient-to-br from-zinc-100 to-zinc-500 bg-clip-text text-transparent font-semibold"
-            />
-          </p>
+            <p className="mt-4 text-xl font-medium min-h-[2rem]">
+              <TypeAnimation
+                sequence={[
+                  "ML Engineer", 1800,
+                  "Backend Developer", 1800,
+                  "Explorer", 1800,
+                  "Full Stack Developer", 1800,
+                  "Problem Solver", 1800,
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+                className="bg-gradient-to-br from-zinc-100 to-zinc-500 bg-clip-text text-transparent font-semibold"
+              />
+            </p>
+          </div>
 
-          <div className="mt-10 md:mt-12">
+          {/* About Me Section: Appears below identity on both, but is the main block on mobile second-half */}
+          <div className="mt-8 md:mt-12">
             <h2 className="text-3xl font-bold text-red-500">About Me</h2>
             <p className="mt-4 text-gray-300 leading-relaxed text-lg">
               I'm a developer focused on building ML-powered applications,

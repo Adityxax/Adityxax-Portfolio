@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import ParticlesBackground from "@/components/ParticlesBackground";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -30,11 +29,10 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} 
-        bg-gradient-to-b from-[#2b0005] via-[#140003] to-black 
-        text-white overflow-x-hidden`}>
+        bg-[#0d0002] text-white overflow-x-hidden`}>
           
-        {/* GLOBAL PARTICLES BACKGROUND */}
-        <ParticlesBackground />
+        {/* GLOBAL STATIC BACKGROUND */}
+        <div className="fixed inset-0 -z-10 bg-gradient-to-b from-[#1a0003] via-[#0d0002] to-black" />
 
         {/* SITE CONTENT */}
         <main className="relative z-10">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import {
   motion,
   AnimatePresence,
@@ -323,23 +323,22 @@ function ArchiveRow({
   );
 }
 
-// ─── Milestone dot: lights up when scroll progress passes its threshold ─────
-function MilestoneDot({ threshold, scrollYProgress }: { threshold: number; scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"] }) {
-  const smoothed = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
-  const color = useTransform(smoothed, (v) => (v >= threshold ? "rgb(239 68 68)" : "rgb(255 255 255 / 0.15)"));
-  const glow = useTransform(smoothed, (v) =>
+const MilestoneDot = React.memo(({ threshold, smoothedProgress }: { threshold: number; smoothedProgress: any }) => {
+  const color = useTransform(smoothedProgress, (v: number) => (v >= threshold ? "rgb(239 68 68)" : "rgb(255 255 255 / 0.15)"));
+  const glow = useTransform(smoothedProgress, (v: number) =>
     v >= threshold ? "0 0 12px 4px rgba(239,68,68,0.55)" : "none"
   );
-  const scale = useTransform(smoothed, [threshold - 0.05, threshold], [0, 1]);
-  const opacity = useTransform(smoothed, [threshold - 0.05, threshold], [0, 1]);
+  const scale = useTransform(smoothedProgress, [threshold - 0.05, threshold], [0, 1]);
+  const opacity = useTransform(smoothedProgress, [threshold - 0.05, threshold], [0, 1]);
 
   return (
     <motion.div
       style={{ boxShadow: glow, backgroundColor: color, scale, opacity }}
-      className="w-3 h-3 rounded-full transition-none"
+      className="w-3 h-3 rounded-full [will-change:transform,box-shadow]"
     />
   );
-}
+});
+MilestoneDot.displayName = "MilestoneDot";
 
 // ─── Other Projects section with center scroll-line ───────────────────────────
 function OtherProjectsSection({ onCollapse }: { onCollapse: () => void }) {
@@ -400,7 +399,7 @@ function OtherProjectsSection({ onCollapse }: { onCollapse: () => void }) {
                 className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
                 style={{ top: `${pct}%` }}
               >
-                <MilestoneDot threshold={threshold} scrollYProgress={scrollYProgress} />
+                <MilestoneDot threshold={threshold} smoothedProgress={scaleY} />
               </div>
             );
           })}
@@ -437,7 +436,7 @@ function OtherProjectsSection({ onCollapse }: { onCollapse: () => void }) {
                 className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
                 style={{ top: `${pct}%` }}
               >
-                <MilestoneDot threshold={threshold} scrollYProgress={scrollYProgress} />
+                <MilestoneDot threshold={threshold} smoothedProgress={scaleY} />
               </div>
             );
           })}
@@ -516,7 +515,7 @@ export default function Projects() {
           {!showArchive && (
             <button
               onClick={handleExploreMore}
-              className="self-start sm:self-end flex items-center gap-3 px-6 py-3 rounded-full border border-red-500/40 bg-white/5 backdrop-blur-md text-sm font-bold tracking-widest uppercase text-red-500 hover:border-red-500 hover:bg-red-500/10 hover:text-red-400 hover:shadow-[0_0_25px_rgba(248,113,113,0.25)] transition-all duration-500"
+              className="hidden md:flex self-start sm:self-end items-center gap-3 px-6 py-3 rounded-full border border-red-500/40 bg-white/5 backdrop-blur-md text-sm font-bold tracking-widest uppercase text-red-500 hover:border-red-500 hover:bg-red-500/10 hover:text-red-400 hover:shadow-[0_0_25px_rgba(248,113,113,0.25)] transition-all duration-500"
             >
               Tap to Explore More Projects
             </button>
