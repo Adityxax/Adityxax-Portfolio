@@ -1,14 +1,24 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 
 export default function Hero() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   return (
-    <section id="home" className="relative min-h-screen text-white overflow-hidden flex items-center justify-center px-6 md:px-12 py-20">
+    <section
+      id="home"
+      className="relative min-h-screen text-white overflow-hidden flex items-center justify-center px-6 md:px-12 py-20"
+    >
       <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-7xl gap-10 md:gap-16 lg:gap-24">
-        
+
         {/* Left/Top: Profile Image */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -16,9 +26,18 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="relative shrink-0 w-48 sm:w-64 md:w-80 lg:w-[420px]"
         >
-          {/* Animated gradient ring */}
-          <div className="absolute -inset-[3px] rounded-full bg-gradient-to-tr from-red-500 via-purple-500 to-cyan-400 animate-spin-slow blur-[2px] opacity-80" />
-          <div className="absolute -inset-[3px] rounded-full bg-gradient-to-bl from-cyan-400 via-blue-500 to-red-500 animate-spin-slow-reverse opacity-60" />
+          {/*
+            On desktop: double spinning gradient ring (GPU-composited, fine for desktop).
+            On mobile: single static gradient border — no animation, no blur, no repaints.
+          */}
+          {isMobile ? (
+            <div className="absolute -inset-[2px] rounded-full bg-gradient-to-tr from-red-500 via-purple-500 to-cyan-400 opacity-60" />
+          ) : (
+            <>
+              <div className="absolute -inset-[3px] rounded-full bg-gradient-to-tr from-red-500 via-purple-500 to-cyan-400 animate-spin-slow blur-[2px] opacity-80" />
+              <div className="absolute -inset-[3px] rounded-full bg-gradient-to-bl from-cyan-400 via-blue-500 to-red-500 animate-spin-slow-reverse opacity-60" />
+            </>
+          )}
           <div className="relative aspect-square rounded-full overflow-hidden shadow-[0_0_60px_rgba(0,0,0,0.6)]">
             <Image
               src="/me.png"
@@ -26,6 +45,7 @@ export default function Hero() {
               width={420}
               height={420}
               priority
+              sizes="(max-width: 640px) 192px, (max-width: 768px) 256px, (max-width: 1024px) 320px, 420px"
               className="w-full h-full object-cover"
             />
           </div>
@@ -38,10 +58,19 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.2 }}
           className="flex flex-col items-center md:items-start text-center md:text-left max-w-2xl"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+          {/* Ghost background name for depth — desktop only to avoid horizontal overflow */}
+          <div
+            aria-hidden
+            className="hidden md:block absolute -top-8 left-0 text-[10rem] lg:text-[13rem] font-black tracking-tighter select-none pointer-events-none text-outline-ghost whitespace-nowrap opacity-[0.04]"
+          >
             ADITYA
+          </div>
+
+          <h1 className="relative text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
+            <span className="text-white">ADI</span><span className="text-outline">TYA</span>
           </h1>
-          <p className="mt-4 text-lg md:text-xl font-medium">
+
+          <p className="mt-4 text-lg md:text-xl font-medium min-h-[2rem]">
             <TypeAnimation
               sequence={[
                 "ML Engineer", 1800,
@@ -56,7 +85,7 @@ export default function Hero() {
               className="bg-gradient-to-r from-red-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent font-semibold"
             />
           </p>
-          
+
           <div className="mt-10 md:mt-12">
             <h2 className="text-3xl font-bold text-white">About Me</h2>
             <p className="mt-4 text-gray-300 leading-relaxed text-lg">

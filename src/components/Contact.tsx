@@ -51,7 +51,9 @@ export default function Contact() {
 
   return (
     <section id="contact" className="min-h-screen text-white px-6 md:px-12 py-24 flex flex-col items-center justify-center">
-      <h2 className="text-4xl font-bold mb-14 text-center">Get In Touch</h2>
+      <h2 className="text-4xl md:text-5xl font-black mb-14 text-center tracking-tight">
+        Get In <span className="text-outline">Touch</span>
+      </h2>
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}

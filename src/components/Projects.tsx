@@ -1,165 +1,556 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useCallback } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
-const projects = [
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const featuredProjects = [
   {
     title: "Smart Image Moderation API",
     description:
       "Detects NSFW content, extracts text via OCR, counts faces, and evaluates image quality using ML models.",
     link: "https://github.com/Adityxax/Smart-Image-Moderation-API",
     image: "/projects/moderation.png",
+    tags: ["FastAPI", "PyTorch", "OpenCV", "Docker"],
   },
   {
-    title: "Face Recognition Attendance System",
+    title: "Face Recognition Attendance",
     description:
-      "Real-time facial recognition attendance platform using YOLOv8 and OpenCV.",
+      "Real-time facial recognition attendance platform using YOLOv8 and OpenCV with live video feed processing.",
     link: "https://github.com/Adityxax/Face-Recognition-Attention-System",
     image: "/projects/attendance.jpg",
-  },
-  {
-    title: "Video Shot Boundary Detection",
-    description:
-      "Hybrid shot boundary detection using CNN temporal features.",
-    link: "https://github.com/Adityxax/Video-Shot-Boundary-Detection",
-    image: "/projects/vsb.png",
+    tags: ["YOLOv8", "OpenCV", "Python"],
   },
   {
     title: "Anti Spoofing Face Detector",
     description:
-      "Real-time face detection and anti-spoofing system using YOLOv8 and OpenCV.",
+      "Real-time face detection and anti-spoofing system using YOLOv8 — distinguishes live faces from photos or screens.",
     link: "https://github.com/Adityxax/Anti-spoofing-and-Face-Detector",
     image: "/projects/spoofing.png",
+    tags: ["YOLOv8", "OpenCV", "Python"],
+  },
+];
+
+const archiveProjects = [
+  {
+    title: "Video Shot Boundary Detection",
+    description:
+      "Hybrid shot boundary detection using CNN temporal features to precisely locate scene transitions in video.",
+    link: "https://github.com/Adityxax/Video-Shot-Boundary-Detection",
+    image: "/projects/vsb.png",
+    tags: ["CNN", "PyTorch", "OpenCV"],
   },
   {
     title: "DocuScan",
     description:
-      "A lean 'Photo-to-Document' utility using a pure OpenCV pipeline for high-quality document enhancement and PDF merging.",
+      "A lean Photo-to-Document utility using a pure OpenCV pipeline for high-quality document enhancement and PDF merging.",
     link: "https://github.com/Adityxax/DocuScan",
     image: "/projects/Docuscan_fixed.png",
+    tags: ["OpenCV", "Python", "PDF"],
   },
   {
     title: "QR & Barcode Generator",
     description:
-      "A fast and efficient QR and Barcode generation tool with a sleek, minimalist interface.",
+      "A fast and efficient QR and Barcode generation tool with a sleek, minimalist interface for bulk generation.",
     link: "https://github.com/Adityxax/QR-Barcode-Generator",
     image: "/projects/qr_barcode.png",
+    tags: ["Python", "React", "TypeScript"],
   },
 ];
 
-export default function Projects() {
-  const [index, setIndex] = useState(0);
-
-  const nextProject = () => {
-    setIndex((prev) => (prev + 1) % projects.length);
-  };
-
-  const prevProject = () => {
-    setIndex((prev) => (prev - 1 + projects.length) % projects.length);
-  };
-
-  const handleDragEnd = (event: any, info: any) => {
-    if (info.offset.x < -50) {
-      nextProject();
-    } else if (info.offset.x > 50) {
-      prevProject();
-    }
-  };
+// ─── Featured row (hover reveals image + description) ─────────────────────────
+function FeaturedRow({
+  project,
+  index,
+  hoveredIndex,
+  setHoveredIndex,
+}: {
+  project: (typeof featuredProjects)[0];
+  index: number;
+  hoveredIndex: number | null;
+  setHoveredIndex: (i: number | null) => void;
+}) {
+  const isHovered = hoveredIndex === index;
 
   return (
-    <section id="projects" className="min-h-screen text-white px-6 sm:px-8 py-24 flex flex-col items-center justify-center">
-      <h2 className="text-4xl font-bold mb-14">Projects</h2>
+    <motion.div
+      onHoverStart={() => setHoveredIndex(index)}
+      onHoverEnd={() => setHoveredIndex(null)}
+      className="group relative border-t border-white/10 cursor-pointer"
+    >
+      <motion.div
+        initial={false}
+        animate={{ backgroundColor: isHovered ? "rgba(255,255,255,0.025)" : "transparent" }}
+        transition={{ duration: 0.3 }}
+        className="absolute inset-0 pointer-events-none"
+      />
 
-      <div className="relative w-full max-w-6xl">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.5 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            onDragEnd={handleDragEnd}
-            className="flex flex-col md:flex-row items-center gap-10 md:gap-16 lg:gap-20 bg-[#0a0a0a] rounded-3xl p-6 sm:p-10 md:p-14 border border-white/10 shadow-2xl relative z-10 overflow-hidden cursor-grab active:cursor-grabbing"
+      <div className="relative flex items-center gap-6 lg:gap-10 py-10 md:py-14 px-4">
+        <span className="text-gray-700 font-mono text-sm shrink-0 w-7">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+        <div className="flex-1 min-w-0">
+          <motion.h3
+            animate={{ color: isHovered ? "rgb(248 113 113)" : "rgb(203 213 225)" }}
+            transition={{ duration: 0.25 }}
+            className="font-black tracking-tight uppercase leading-none text-2xl md:text-3xl lg:text-4xl"
           >
-            {/* Background glowing effect */}
-            <div className="absolute -top-24 -left-24 w-64 h-64 bg-red-500/10 blur-[100px] rounded-full pointer-events-none" />
-            <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
+            {project.title}
+          </motion.h3>
 
-            <div className="flex-1 w-full max-w-md lg:max-w-lg">
-              <div className="relative group">
-                {/* Gradient Border Wrap */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-blue-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+          <div className="flex gap-2 flex-wrap mt-4">
+            {project.tags.map((tag) => (
+              <span key={tag} className="text-[10px] font-semibold tracking-widest uppercase text-gray-500 border border-white/10 rounded-full px-2.5 py-0.5">
+                {tag}
+              </span>
+            ))}
+          </div>
 
-                <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                  <Image
-                    src={projects[index].image}
-                    alt={projects[index].title}
-                    width={600}
-                    height={400}
-                    className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex-1 space-y-6 lg:space-y-8">
-              <h3 className="text-3xl lg:text-4xl font-bold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                {projects[index].title}
-              </h3>
-              <p className="text-gray-400 text-lg leading-relaxed">
-                {projects[index].description}
-              </p>
-
-              <div className="pt-4 flex flex-wrap gap-4">
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                key="desc"
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: "auto", marginTop: "0.75rem" }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="overflow-hidden"
+              >
+                <p className="text-gray-400 text-base leading-relaxed max-w-2xl">
+                  {project.description}
+                </p>
                 <a
-                  href={projects[index].link}
+                  href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-bold rounded-xl overflow-hidden transition-all hover:pr-10"
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center gap-2 mt-4 text-xs font-bold tracking-widest uppercase text-red-500 hover:text-white transition-colors"
                 >
-                  <span className="relative z-10 font-bold">View Project</span>
-                  <FaExternalLinkAlt className="relative z-10 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  <div className="absolute inset-0 bg-gray-200 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  View Project <FaExternalLinkAlt size={10} />
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Image slides in from right */}
+        <div className="shrink-0 w-0 md:w-[280px] lg:w-[400px] h-0 md:h-[175px] lg:h-[240px] overflow-hidden rounded-2xl">
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                key="img"
+                initial={{ opacity: 0, scale: 0.9, x: 24 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.9, x: 24 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="w-full h-full"
+              >
+                <div className="relative w-full h-[175px] lg:h-[240px]">
+                  <Image src={project.image} alt={project.title} fill sizes="(max-width: 1024px) 280px, 400px" className="object-contain rounded-2xl" />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Archive row — alternating layout (Souvik style) ─────────────────────────
+function ArchiveRow({
+  project,
+  index,
+  isHovered,
+  onHoverStart,
+  onHoverEnd,
+}: {
+  project: (typeof archiveProjects)[0];
+  index: number;
+  isHovered: boolean;
+  onHoverStart: () => void;
+  onHoverEnd: () => void;
+}) {
+  // Even index = image left, text right | Odd index = text left, image right
+  const imageLeft = index % 2 === 0;
+
+  return (
+    <motion.div
+      onHoverStart={onHoverStart}
+      onHoverEnd={onHoverEnd}
+      className="relative cursor-pointer"
+    >
+      <motion.div
+        initial={false}
+        animate={{ backgroundColor: isHovered ? "rgba(248,113,113,0.04)" : "transparent" }}
+        transition={{ duration: 0.3 }}
+        className="absolute inset-0 pointer-events-none"
+      />
+
+      {/* Desktop alternating grid */}
+      <div className="relative hidden md:grid grid-cols-[1fr_auto_1fr] items-center py-12 lg:py-16 gap-0">
+
+        {/* Left column */}
+        <div className={`px-6 ${imageLeft ? "" : "flex flex-col justify-center"}`}>
+          {imageLeft ? (
+            // Image on left
+            <div className="relative h-[200px] lg:h-[240px] rounded-2xl overflow-hidden">
+              <motion.div
+                initial={{ filter: "brightness(0.4)" }}
+                animate={{ filter: isHovered ? "brightness(1)" : "brightness(0.4)" }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0"
+              >
+                <Image src={project.image} alt={project.title} fill sizes="50vw" className="object-contain" />
+              </motion.div>
+            </div>
+          ) : (
+            // Text on left
+            <div>
+              <motion.h3
+                animate={{ color: isHovered ? "rgb(248 113 113)" : "rgb(203 213 225)" }}
+                transition={{ duration: 0.25 }}
+                className="font-black tracking-tight uppercase leading-none text-2xl lg:text-3xl"
+              >
+                {project.title}
+              </motion.h3>
+              <p className="text-gray-500 text-sm leading-relaxed mt-3 max-w-sm">{project.description}</p>
+              <div className="flex gap-2 flex-wrap mt-4">
+                {project.tags.map((tag) => (
+                  <span key={tag} className="text-[10px] font-semibold tracking-widest uppercase text-gray-500 border border-white/10 rounded-full px-2.5 py-0.5">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <motion.a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                animate={{ opacity: isHovered ? 1 : 0 }}
+                transition={{ duration: 0.25 }}
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-2 mt-4 text-xs font-bold tracking-widest uppercase text-red-400 hover:text-white transition-colors"
+              >
+                View Project <FaExternalLinkAlt size={10} />
+              </motion.a>
+            </div>
+          )}
+        </div>
+
+        {/* Center spacer — the scroll line lives in the parent */}
+        <div className="w-px self-stretch" />
+
+        {/* Right column */}
+        <div className={`px-6 ${imageLeft ? "flex flex-col justify-center" : ""}`}>
+          {imageLeft ? (
+            // Text on right
+            <div>
+              <motion.h3
+                animate={{ color: isHovered ? "rgb(248 113 113)" : "rgb(203 213 225)" }}
+                transition={{ duration: 0.25 }}
+                className="font-black tracking-tight uppercase leading-none text-2xl lg:text-3xl"
+              >
+                {project.title}
+              </motion.h3>
+              <p className="text-gray-500 text-sm leading-relaxed mt-3 max-w-sm">{project.description}</p>
+              <div className="flex gap-2 flex-wrap mt-4">
+                {project.tags.map((tag) => (
+                  <span key={tag} className="text-[10px] font-semibold tracking-widest uppercase text-gray-500 border border-white/10 rounded-full px-2.5 py-0.5">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <motion.a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                animate={{ opacity: isHovered ? 1 : 0 }}
+                transition={{ duration: 0.25 }}
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-2 mt-4 text-xs font-bold tracking-widest uppercase text-red-400 hover:text-white transition-colors"
+              >
+                View Project <FaExternalLinkAlt size={10} />
+              </motion.a>
+            </div>
+          ) : (
+            // Image on right
+            <div className="relative h-[200px] lg:h-[240px] rounded-2xl overflow-hidden">
+              <motion.div
+                initial={{ filter: "brightness(0.4)" }}
+                animate={{ filter: isHovered ? "brightness(1)" : "brightness(0.4)" }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0"
+              >
+                <Image src={project.image} alt={project.title} fill sizes="50vw" className="object-contain" />
+              </motion.div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile: simple card */}
+      <div className="md:hidden flex flex-col gap-3 py-6 px-2">
+        <div className="relative h-40 rounded-xl overflow-hidden">
+          <Image src={project.image} alt={project.title} fill sizes="100vw" className="object-contain" />
+        </div>
+        <h3 className="font-black tracking-tight uppercase text-xl text-white">{project.title}</h3>
+        <p className="text-gray-500 text-sm leading-relaxed">{project.description}</p>
+        <div className="flex gap-2 flex-wrap">
+          {project.tags.map((tag) => (
+            <span key={tag} className="text-[10px] font-semibold tracking-widest uppercase text-gray-500 border border-white/10 rounded-full px-2.5 py-0.5">{tag}</span>
+          ))}
+        </div>
+        <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-red-400">
+          View Project <FaExternalLinkAlt size={10} />
+        </a>
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Milestone dot: lights up when scroll progress passes its threshold ─────
+function MilestoneDot({ threshold, scrollYProgress }: { threshold: number; scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"] }) {
+  const smoothed = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
+  const color = useTransform(smoothed, (v) => (v >= threshold ? "rgb(239 68 68)" : "rgb(255 255 255 / 0.15)"));
+  const glow = useTransform(smoothed, (v) =>
+    v >= threshold ? "0 0 12px 4px rgba(239,68,68,0.55)" : "none"
+  );
+  return (
+    <motion.div
+      style={{ boxShadow: glow, backgroundColor: color }}
+      className="w-3 h-3 rounded-full transition-none"
+    />
+  );
+}
+
+// ─── Other Projects section with center scroll-line ───────────────────────────
+function OtherProjectsSection({ onCollapse }: { onCollapse: () => void }) {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start center", "end end"],
+  });
+  const scaleY = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
+
+  return (
+    <div ref={sectionRef} className="mt-24 md:mt-32">
+      {/* Section heading */}
+      <div id="other-projects-heading" className="scroll-mt-24 relative mb-0 pb-6 border-b border-white/10 overflow-hidden">
+        {/* Ghost text */}
+        <div
+          aria-hidden
+          className="hidden md:block absolute -top-2 left-0 font-black tracking-tighter text-outline-ghost opacity-[0.04] uppercase select-none pointer-events-none whitespace-nowrap text-[8rem] lg:text-[10rem]"
+        >
+          PROJECTS
+        </div>
+
+        <div className="relative flex items-end justify-between gap-4">
+          <div>
+
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase">
+              Other <span className="text-outline">Projects</span>
+            </h2>
+          </div>
+          <span className="text-gray-600 text-xs font-mono tracking-widest uppercase shrink-0">
+            {archiveProjects.length} works
+          </span>
+        </div>
+      </div>
+
+      {/* Desktop: two-column alternating with center scroll-line */}
+      <div className="relative hidden md:block">
+        {/* Center scroll-progress line + milestone dots */}
+        <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px pointer-events-none z-10">
+          {/* Track */}
+          <div className="absolute inset-0 bg-white/8" />
+          {/* Filled progress */}
+          <motion.div
+            style={{ scaleY, transformOrigin: "top" }}
+            className="absolute inset-0 bg-red-500/70"
+          />
+          {/* Fixed milestone dots — one per project, light up as scroll passes */}
+          {archiveProjects.map((_, i) => {
+            // Place dot at 1/(2N), 3/(2N), 5/(2N) ... (middle of each row band)
+            const n = archiveProjects.length;
+            const pct = ((2 * i + 1) / (2 * n)) * 100;
+            const threshold = (2 * i + 1) / (2 * n);
+            return (
+              <div
+                key={i}
+                className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
+                style={{ top: `${pct}%` }}
+              >
+                <MilestoneDot threshold={threshold} scrollYProgress={scrollYProgress} />
+              </div>
+            );
+          })}
+        </div>
+
+        {archiveProjects.map((project, i) => (
+          <ArchiveRow
+            key={i}
+            project={project}
+            index={i}
+            isHovered={hoveredIndex === i}
+            onHoverStart={() => setHoveredIndex(i)}
+            onHoverEnd={() => setHoveredIndex(null)}
+          />
+        ))}
+      </div>
+
+      {/* Mobile: stacked list */}
+      <div className="md:hidden">
+        {archiveProjects.map((project, i) => (
+          <ArchiveRow
+            key={i}
+            project={project}
+            index={i}
+            isHovered={hoveredIndex === i}
+            onHoverStart={() => setHoveredIndex(i)}
+            onHoverEnd={() => setHoveredIndex(null)}
+          />
+        ))}
+      </div>
+
+      {/* Collapse */}
+      <div className="mt-12">
+        <button
+          onClick={onCollapse}
+          className="flex items-center justify-center gap-3 px-8 py-3 rounded-full border border-red-500/40 bg-white/5 backdrop-blur-md text-sm font-bold tracking-widest uppercase text-red-500 hover:border-red-500 hover:bg-red-500/10 hover:text-red-400 hover:shadow-[0_0_25px_rgba(248,113,113,0.25)] transition-all duration-500"
+        >
+          ↑ Collapse Projects
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
+export default function Projects() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [showArchive, setShowArchive] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const otherProjectsRef = useRef<HTMLDivElement>(null);
+
+  const handleExploreMore = useCallback(() => {
+    setShowArchive(true);
+    setIsScrolling(true);
+    // Allow DOM to render the new height before scrolling
+    setTimeout(() => {
+      const target = document.getElementById("other-projects-heading");
+      target?.scrollIntoView({ behavior: "smooth", block: "start" });
+      
+      // Re-enable interactions after scroll finishes
+      setTimeout(() => setIsScrolling(false), 1000);
+    }, 100);
+  }, []);
+
+  const handleCollapse = useCallback(() => {
+    setIsScrolling(true);
+    // Scroll up FIRST while the element is still in the DOM
+    const target = document.getElementById("projects-heading");
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    
+    // Wait for the smooth scroll to finish before removing the massive element
+    setTimeout(() => {
+      setShowArchive(false);
+      setIsScrolling(false);
+    }, 600);
+  }, []);
+
+  return (
+    <section id="projects" className={`text-white px-6 sm:px-10 md:px-16 py-24 flex flex-col items-center ${isScrolling ? "pointer-events-none" : ""}`}>
+      <div className="w-full max-w-7xl">
+
+        {/* Section header */}
+        <div id="projects-heading" className="scroll-mt-28 flex flex-col sm:flex-row sm:items-end justify-between pb-6 gap-6">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase">
+            <span className="text-white">PRO</span><span className="text-outline">JECTS</span>
+          </h2>
+
+          {!showArchive && (
+            <button
+              onClick={handleExploreMore}
+              className="self-start sm:self-end flex items-center gap-3 px-6 py-3 rounded-full border border-red-500/40 bg-white/5 backdrop-blur-md text-sm font-bold tracking-widest uppercase text-red-500 hover:border-red-500 hover:bg-red-500/10 hover:text-red-400 hover:shadow-[0_0_25px_rgba(248,113,113,0.25)] transition-all duration-500"
+            >
+              Tap to Explore More Projects
+            </button>
+          )}
+        </div>
+
+        {/* Featured rows — desktop */}
+        <div className="hidden md:block">
+          {featuredProjects.map((project, i) => (
+            <FeaturedRow
+              key={i}
+              project={project}
+              index={i}
+              hoveredIndex={hoveredIndex}
+              setHoveredIndex={setHoveredIndex}
+            />
+          ))}
+          <div className="border-t border-white/10" />
+        </div>
+
+        {/* Featured — mobile cards */}
+        <div className="md:hidden space-y-5 mt-6">
+          {featuredProjects.map((project, i) => (
+            <div key={i} className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden shadow-lg">
+              <div className="relative h-48 w-full rounded-t-2xl overflow-hidden">
+                <Image src={project.image} alt={project.title} fill sizes="100vw" className="object-contain" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                <span className="absolute top-3 left-3 text-gray-500 font-mono text-xs">{String(i + 1).padStart(2, "0")}</span>
+              </div>
+              <div className="p-5 space-y-3">
+                <h3 className="text-xl font-black text-white uppercase tracking-tight">{project.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{project.description}</p>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="text-[10px] font-semibold tracking-widest uppercase text-gray-500 border border-white/10 rounded-full px-2 py-0.5">{tag}</span>
+                  ))}
+                </div>
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-white border border-white/20 rounded-lg px-4 py-2 hover:bg-white/10 transition-colors mt-1">
+                  View Project <FaExternalLinkAlt size={12} />
                 </a>
               </div>
             </div>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Pagination Dots */}
-        <div className="flex justify-center gap-3 mt-10">
-          {projects.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setIndex(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${index === i
-                  ? "w-8 bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"
-                  : "w-2 bg-white/20 hover:bg-white/40"
-                }`}
-              aria-label={`Go to project ${i + 1}`}
-            />
           ))}
+          {!showArchive && (
+            <button onClick={handleExploreMore} className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-full border border-red-500/40 bg-white/5 backdrop-blur-md text-sm font-bold tracking-widest uppercase text-red-500 hover:border-red-500 hover:bg-red-500/10 hover:text-red-400 hover:shadow-[0_0_25px_rgba(248,113,113,0.25)] transition-all duration-500">
+              Tap to Explore More Projects
+            </button>
+          )}
         </div>
 
-        {/* Navigation Arrows */}
-        <button
-          onClick={prevProject}
-          className="absolute left-[-20px] md:left-[-60px] top-1/2 -translate-y-1/2 z-20 p-3 md:p-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:scale-110 active:scale-95 transition-all shadow-xl backdrop-blur-md flex scale-75 md:scale-100"
-        >
-          <FiChevronLeft size={24} />
-        </button>
-        <button
-          onClick={nextProject}
-          className="absolute right-[-20px] md:right-[-60px] top-1/2 -translate-y-1/2 z-20 p-3 md:p-4 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:scale-110 active:scale-95 transition-all shadow-xl backdrop-blur-md flex scale-75 md:scale-100"
-        >
-          <FiChevronRight size={24} />
-        </button>
+        {/* Other Projects section */}
+        <AnimatePresence>
+          {showArchive && (
+            <motion.div
+              key="archive"
+              ref={otherProjectsRef}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <OtherProjectsSection onCollapse={handleCollapse} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
+  { name: "Tech Arsenal", href: "#about" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ];
@@ -51,7 +51,7 @@ export default function Navbar() {
     const elem = document.getElementById(targetId);
     if (elem) {
       window.scrollTo({
-        top: elem.offsetTop, 
+        top: elem.offsetTop,
         behavior: "smooth",
       });
       window.history.pushState(null, "", href);
@@ -64,17 +64,16 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-black/40 backdrop-blur-xl border-b border-white/10 shadow-lg py-4"
-          : "bg-transparent py-6"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? "bg-black/40 backdrop-blur-xl border-b border-white/10 shadow-lg py-4"
+        : "bg-transparent py-6"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        
+
         {/* Logo/Brand */}
-        <a 
-          href="#home" 
+        <a
+          href="#home"
           onClick={(e) => handleClick(e, "#home")}
           className="text-2xl font-bold tracking-tighter text-white z-50 relative"
         >
@@ -88,11 +87,10 @@ export default function Navbar() {
               <a
                 href={link.href}
                 onClick={(e) => handleClick(e, link.href)}
-                className={`relative font-medium transition-colors ${
-                  activeSection === link.href.substring(1)
-                    ? "text-white"
-                    : "text-gray-400 hover:text-white"
-                }`}
+                className={`nav-link-hover relative font-medium transition-colors ${activeSection === link.href.substring(1)
+                  ? "text-white"
+                  : "text-gray-400 hover:text-white"
+                  }`}
               >
                 {link.name}
                 {activeSection === link.href.substring(1) && (
@@ -143,11 +141,10 @@ export default function Navbar() {
                   <a
                     href={link.href}
                     onClick={(e) => handleClick(e, link.href)}
-                    className={`text-4xl font-bold tracking-tight transition-colors ${
-                      activeSection === link.href.substring(1)
-                        ? "text-white"
-                        : "text-gray-500 hover:text-white"
-                    }`}
+                    className={`nav-link-hover text-4xl font-bold tracking-tight transition-colors ${activeSection === link.href.substring(1)
+                      ? "text-white"
+                      : "text-gray-500 hover:text-white"
+                      }`}
                   >
                     {link.name}
                     {activeSection === link.href.substring(1) && (
