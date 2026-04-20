@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   },
 };
 
+import PreloaderProvider from "@/components/PreloaderProvider";
+
 export default function RootLayout({
   children,
 }: {
@@ -31,13 +33,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} 
         bg-[#0d0002] text-white overflow-x-hidden`}>
           
-        {/* GLOBAL STATIC BACKGROUND */}
-        <div className="fixed inset-0 -z-10 bg-gradient-to-b from-[#1a0003] via-[#0d0002] to-black" />
+        <PreloaderProvider>
+          {/* GLOBAL STATIC BACKGROUND */}
+          <div className="fixed inset-0 -z-10 bg-gradient-to-b from-[#1a0003] via-[#0d0002] to-black" />
 
-        {/* SITE CONTENT */}
-        <main className="relative z-10">
-          {children}
-        </main>
+          {/* SITE CONTENT */}
+          <main className="relative z-10">
+            {children}
+          </main>
+        </PreloaderProvider>
       </body>
     </html>
   );
